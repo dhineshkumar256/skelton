@@ -1,0 +1,186 @@
+<!--<div id="settings">-->
+<div id="Settings" class="page-layout simple fullwidth doc-page">
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="breadcrumb" layout="row" layout-align="start center">
+            </div>
+            <div class="title">Settings</div>
+        </div>
+    </div>
+    <div class="page-layout carded fullwidth single-scroll" layout="row">
+        <div class="center" layout="column" flex>
+            <div class="header">
+                <span class="h1 black-fg">Update your Profile!</span>
+            </div>
+    <!-- CONTACT STARTS-->
+            <md-card class="content-card" layout="column" >
+                <div class="toolbar" layout="row" layout-align="start center">
+                    <span>Contact</span>
+                </div>
+                <!-- CONTACT CONTENT -->
+                <md-content class="content" flex>
+                    <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="50">
+                            <input type="text" name="firstname" placeholder="Firstname">
+                        </md-input-container>
+
+                        <md-input-container flex="100" flex-gt-xs="50">
+                            <input type="text" name="lastname" placeholder="Lastname">
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="50" >
+                            <input type="text" name="Phone" placeholder="Phone" ng-pattern="/^[0-9]*$/" required>
+                        </md-input-container>
+                        <md-input-container flex="100" flex-gt-xs="50">
+                            <input type="text" name="company" placeholder="company">
+                        </md-input-container>
+                    </div>
+                </md-content>
+                <!-- / CONTACT CONTENT -->
+            </md-card>
+    <!-- CONTACT END-->
+
+    <!-- ADDRESS STARTS-->
+            <md-card class="content-card" layout="column" flex>
+                <div class="toolbar" layout="row" layout-align="start center">
+                    <span>Address</span>
+                </div>
+            <!-- CONTACT CONTENT -->
+                <md-content class="content" flex>
+                    <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="50">
+                            <input type="text" name="Street" placeholder="Street">
+                        </md-input-container>
+
+                        <md-input-container flex="100" flex-gt-xs="50">
+                            <input type="text" name="City" placeholder="City">
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="50" >
+                            <input type="text" name="State" placeholder="State">
+                        </md-input-container>
+                        <md-input-container flex="100" flex-gt-xs="50">
+                            <input type="text" name="Zipcode" placeholder="Zipcode">
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="100" >
+                            <input type="text" name="Country" placeholder="Country">
+                        </md-input-container>
+                    </div>
+                </md-content>
+            <!-- CONTACT CONTENT -->
+            </md-card>
+    <!-- ADDRESS END-->
+        </div>
+    </div>
+    
+    <div class="page-layout carded fullwidth single-scroll" layout="row">
+        <div class="center" layout="column" flex>
+            <div class="header">
+                <span class="h1 black-fg">Your Plan</span>
+            </div>
+
+            <!-- PLAN STARTS-->
+            <md-card class="content-card" layout="column">
+                <div class="toolbar" layout="row">
+                    <span layout="row" layout-align="start center" flex="55">PLAN</span>
+                    <span layout="row" layout-align="end center" flex-offset="55">
+                        <md-button class="md-accent md-raised md-hue-1" ng-click="changePlan()">Change Plan</md-button>
+                    </span>
+                </div>
+                <!-- PLAN CONTENT -->
+                <div class="toolbar" layout="row">
+                    <h3>Your Trail Ends a month ago..</h3>
+                </div>
+                <div class="toolbar" layout="row">
+                    <h3>PREMIUM</h3>
+                    <span layout="row" layout-align="end center" flex-offset="55">$199/mon</span>
+                </div>
+                <md-divider></md-divider>
+            </md-card>
+
+            <md-card class="content-card" layout="column">
+                <div class="toolbar" layout="row">
+                    <span layout="row" layout-align="start center" flex="55">Unique Visitors In This Biilling Period</span>
+                </div>
+                <div layout="column" layout-align="center stretch" style="padding-top: 10px; padding-left: 20px;padding-right: 20px;">
+                    <md-input-container>
+                        <md-progress-linear md-mode="determinate" value="25"></md-progress-linear>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between center" style="padding: 20px; padding-top: 0px;">
+                    <div>
+                        <h1>92</h1>
+                        <h3>Unique Visitors Tracked</h3>
+                    </div>
+                    <div>
+                        <h1>10%</h1>
+                        <h3>Used</h3>
+                    </div>
+                    <div>
+                        <h1>90000</h1>
+                        <h3>Unique Visitors Alotted</h3>
+                    </div>
+                </div>
+                <!-- / PLAN CONTENT -->
+            </md-card>
+    <!-- PLAN END-->
+        </div>
+    </div>
+
+    <div class="page-layout carded fullwidth single-scroll" layout="row">
+        <div class="center" layout="column" flex>
+            <div class="header">
+                <span class="h1 black-fg">Billing</span>
+            </div>
+
+            <!-- PAYMENT STARTS-->
+            <md-card class="content-card" layout="column">
+                <div class="toolbar" layout="row">
+                    <span layout="row" layout-align="start center" flex="85">Payment Info</span>
+                    <span layout="row" layout-align="end center" flex="15">
+                        <md-button class="md-accent md-raised md-hue-1" ng-click="addpayment($event)">
+                            <md-icon><i class="icon-pencil"></i></md-icon>
+                        </md-button>
+                    </span>
+                </div>
+                <!-- PAYMENT CONTENT -->
+                <md-content class="content" flex ng-if="1!=1">
+                    <div layout="column" layout-gt-xs="row" flex>
+                        <p>You have no cards.</p>
+                    </div>
+                </md-content>
+                <md-content>
+                    <div flex-xs flex-gt-xs="50" layout="column">
+                        <md-card class="content-card">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">XXXX XXXX XXXX 5412</span>
+                                    <span class="md-subhead">01/20</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </md-card>
+                    </div>
+                </md-content>
+                <md-content>
+                    <div flex-xs flex-gt-xs="50" layout="column">
+                        <md-card class="content-card">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">XXXX XXXX XXXX 8919</span>
+                                    <span class="md-subhead">21/22</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </md-card>
+                    </div>
+                </md-content>
+                <!-- / PAYMENT CONTENT -->
+            </md-card>
+    <!-- PAYMENT END-->
+        </div>
+    </div>
+<!--</div>-->
+</div>

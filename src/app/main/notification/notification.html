@@ -1,0 +1,284 @@
+<div id="notification" class="page-layout simple fullwidth doc-page" layout="column">
+
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="breadcrumb" layout="row" layout-align="start center">
+            </div>
+            <div class="title">Notifications</div>
+        </div>
+    </div>
+
+    <div class="content" layout="row" layout-align="end center">
+        <md-button class="md-accent md-raised md-warn md-hue-1" ng-click="cancelCreateNotification()" ng-if="!dataTableshow">Cancel</md-button>
+        <md-button class="md-accent md-raised md-hue-1" ng-click="createNotification()">Create Notification</md-button>
+    </div>
+    <!-- DATA TABLE STARTS HERE-->
+    <div id="notification-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- CONTENT -->
+        <div class="content">
+            <div class="content" layout="column">
+                <div class="md-title mb-32">Notifications</div>
+            </div>
+            <div class="white-bg md-whiteframe-4dp" ng-if="dataTableshow">
+                <md-card class="content-card" layout="column" style="margin: 0px;margin-bottom: 2px">
+                    <div class="toolbar" layout="row" style="padding-left: 10px">
+                        <!--<div layout="row" flex><i class="icon-filter"></i></div>-->
+                        <div layout="row" layout-gt-sm="row" layout-align="start center" flex>
+                            <div layout-gt-sm="row">
+                                <md-input-container md-no-float class="md-block" flex-gt-sm>
+                                    <md-icon><i class="icon-tag"></i></md-icon>
+                                    <input type="text" name="tags" placeholder="Select Tags">
+                                </md-input-container>
+                            </div>&nbsp;
+                            <md-input-container>
+                                <md-datepicker ng-model="data.FromDate" md-placeholder="From date" md-hide-icons="calendar"></md-datepicker>
+                            </md-input-container>
+                            <md-input-container>
+                                <md-datepicker ng-model="data.ToDate" md-placeholder="To date" ng-change="fnTablefilter()" md-hide-icons="calendar"></md-datepicker>
+                            </md-input-container>
+                            <div layout-gt-md="row">
+                                <md-input-container md-no-float class="md-block" flex-gt-sm>
+                                    <md-icon><i class="icon-magnify"></i></md-icon>
+                                    <input type="text" name="search" placeholder="Search">
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <span layout="row" layout-align="end center" flex="20">
+                                <md-button class="md-accent md-raised md-hue-1">IMPORT</md-button>
+                                <md-button class="md-accent md-raised md-hue-1">EXPORT</md-button>
+                        </span>
+                    </div>
+                </md-card>
+                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Customer Name</span>
+                                </div>
+                            </th>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Status</span>
+                                </div>
+                            </th>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">View/edit</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="notifydata in ::vm.notification">
+                          <td>{{ notifydata.name }}</td>
+                          <td>{{ notifydata.createDate }}</td>
+                          <td><md-button ng-bind-html="notifydata.status"></md-button></td>
+                          <td><md-button ng-click='editNotification()' ng-bind-html="notifydata.view"></md-button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+    <!-- DATA TALE END HERE -->
+    <div id="forms" class="page-layout simple fullwidth doc-page element-doc-page" layout="column">
+
+<!-- Create notification panel starts-->
+    <!-- CONTENT -->
+    <div class="content" layout="column" ng-if="!dataTableshow">
+        <div layout="row">
+            <!-- FORM WIZARD -->
+            <ms-form-wizard flex>
+                <md-tabs md-dynamic-height md-selected="msWizard.selectedIndex" md-center-tabs="true">
+                    <md-tab>
+                        <md-tab-label>
+                            <span class="ms-form-wizard-step-label">
+                                <span class="ms-form-wizard-step-number md-accent-bg"
+                                      ng-if="wizardStep1.$invalid">1</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep1.$valid">
+                                    <i class="icon-check s16"></i>
+                                </span>
+                                <span class="ms-form-wizard-step-text">Capture</span>
+                            </span>
+                        </md-tab-label>
+
+                        <md-tab-body>
+                            <form name="wizardStep1" class="md-inline-form" ms-form-wizard-form novalidate>
+                                <div layout="column" layout-gt-xs="row" flex>
+                                    <md-input-container flex>
+                                        <!-- <input type="text" name="capture" ng-model="vm.formWizard.capture"
+                                               placeholder="Capture" ng-pattern="/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/" required> -->
+                                        <md-chips ng-model="URL1" md-transform-chip="validateURL($chip)" name="capture" readonly="false" placeholder="Enter a URL" secondary-placeholder="+URL" md-removable="URL1" required>
+                                        </md-chips>
+                                        <div ng-messages="wizardStep1.capture.$error"
+                                             role="alert">
+                                            <div ng-message="required">
+                                                <span>Capture field is required.</span>
+                                            </div>
+                                            <div ng-message="pattern">
+                                                <span>That doesn't look like a valid URL.</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </form>
+                        </md-tab-body>
+                    </md-tab>
+
+                    <md-tab ng-disabled="wizardStep1.$invalid">
+                        <md-tab-label>
+                            <span class="ms-form-wizard-step-label">
+                                <span class="ms-form-wizard-step-number md-accent-bg"
+                                      ng-if="wizardStep2.$invalid">2</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
+                                    <i class="icon-check s16"></i>
+                                </span>
+                                <span class="ms-form-wizard-step-text">Display</span>
+                            </span>
+                        </md-tab-label>
+
+                        <md-tab-body>
+                            <form name="wizardStep2" ms-form-wizard-form novalidate>
+                                <div layout="column" layout-gt-xs="row">
+
+                                    <md-input-container flex>
+                                        <label>Post URL</label>
+                                        <input name="PostURL" ng-model="vm.formWizard.PostURL" placeholder="PostURL"
+                                               required ng-pattern="/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/">
+                                        <div ng-messages="wizardStep2.PostURL.$error"
+                                             role="alert" multiple>
+                                            <div ng-message="required"><span>You must give PostURL.</span></div>
+                                            <div ng-message="pattern">
+                                                <span>That doesn't look like a valid URL.</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </form>
+                        </md-tab-body>
+                    </md-tab>
+
+                    <md-tab ng-disabled="wizardStep1.$invalid || wizardStep2.$invalid">
+                        <md-tab-label>
+                            <span class="ms-form-wizard-step-label">
+                                <span class="ms-form-wizard-step-number md-accent-bg"
+                                      ng-if="wizardStep3.$invalid">3</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
+                                    <i class="icon-check s16"></i>
+                                </span>
+                                <span class="ms-form-wizard-step-text">Type</span>
+                            </span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <form name="wizardStep3" ms-form-wizard-form novalidate>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-input-container flex>
+                                        <label>Message</label>
+                                        <textarea name="Message" ng-model="vm.formWizard.Message" rows="6" placeholder="Message"
+                                                  required></textarea>
+                                        <div ng-messages="wizardStep3.Message.$error"
+                                             role="alert" multiple>
+                                            <div ng-message="required"><span>You must give Message.</span></div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </form>
+                        </md-tab-body>
+                    </md-tab>
+
+                    <md-tab ng-disabled="wizardStep1.$invalid || wizardStep2.$invalid || wizardStep3.$invalid">
+                        <md-tab-label>
+                            <span class="ms-form-wizard-step-label">
+                                <span class="ms-form-wizard-step-number md-accent-bg"
+                                      ng-if="wizardStep4.$invalid">4</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep4.$valid">
+                                    <i class="icon-check s16"></i>
+                                </span>
+                                <span class="ms-form-wizard-step-text">Customize</span>
+                            </span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <form name="wizardStep4" ms-form-wizard-form novalidate>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-input-container flex>
+                                        <label>Tags</label>
+                                        <input type="text" name="tags" placeholder="Tags" />
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-switch md-invert ng-model="data.mobile" aria-label="Show on mobile" ng-change="onChange(data.mobile)">Show on Mobile</md-switch>
+                                    <md-switch md-invert ng-if="data.mobile" ng-model="data.mobileDevice" aria-label="Show on Top of Mobile Devices" ng-change="onChange(data.mobileDevice)">Show on Top of Mobile Devices</md-switch>
+                                </div>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-switch md-invert ng-model="data.count" aria-label="Live User Count" ng-change="onChange(data.count)">Live User Count</md-switch>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <md-input-container flex ng-if="data.count">
+                                        Maximum User to show
+                                        <input type="text" name="showuser"/>
+                                    </md-input-container>
+                                    <md-input-container flex ng-if="data.count">
+                                        Refer User as
+                                        <input type="text" name="referuser"/>
+                                    </md-input-container>
+                                </div><br/>
+                                <div layout="column" layout-gt-xs="row">
+                                    Display Last <input type="text" class="cstminout" /> Users.
+                                </div>
+                                <br/><br/>
+                                <div layout="column" layout-gt-xs="row">
+                                    Display Last<input type="text" class="cstminout" /> days Users.
+                                </div>
+                                <br/>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-switch md-invert ng-model="data.recent" aria-label="Live User Count" ng-change="onChange(data.recent)">Display most Recent</md-switch>
+                                </div>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-switch md-invert ng-model="data.own" aria-label="Live User Count" ng-change="onChange(data.own)">See own message</md-switch>
+                                </div>
+                                <div layout="column" layout-gt-xs="row">
+                                    <md-switch md-invert ng-model="data.unknownuser" aria-label="Live User Count" ng-change="onChange(data.unknownuser)">Hide unknown user</md-switch>
+                                </div>
+                                <br/>
+                                <div layout="column" layout-gt-xs="row">
+                                    Display Interval <input class="cstminout" type="text" width="25px" /> Seconds.
+                                </div>
+                            </form>
+                        </md-tab-body>
+                    </md-tab>
+                </md-tabs>
+
+                <div class="navigation" flex layout="row" layout-align="center center">
+                    <md-button class="md-raised md-accent" ng-click="msWizard.previousStep()"
+                               ng-disabled="msWizard.isFirstStep()">
+                        Previous
+                    </md-button>
+                    <div class="steps">
+                        <span ng-repeat="form in msWizard.forms"
+                              ng-class="{'selected md-accent-bg':msWizard.selectedIndex === $index}"></span>
+                    </div>
+                    <md-button class="md-raised md-accent" ng-click="msWizard.nextStep()"
+                               ng-hide="msWizard.isLastStep()"
+                               ng-disabled="msWizard.currentStepInvalid()">
+                        Next
+                    </md-button>
+                    <md-button class="md-raised md-warn" ng-click="vm.sendForm(); msWizard.resetForm();"
+                               ng-show="msWizard.isLastStep()"
+                               ng-disabled="msWizard.formsIncomplete()">
+                        Finish
+                    </md-button>
+                </div>
+
+            </ms-form-wizard>
+            <!-- / FORM WIZARD -->
+        </div>
+    </div>
+    <!-- / CONTENT -->
+</div>
+    <!-- Create notification panel end-->
+</div>

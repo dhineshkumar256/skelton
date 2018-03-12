@@ -1,0 +1,128 @@
+<div id="Customers" class="page-layout simple fullwidth doc-page">
+    <div class="header md-accent-bg" layout="row" layout-align="space-between">
+        <div layout="column" layout-align="center start">
+            <div class="breadcrumb" layout="row" layout-align="start center">
+            </div>
+            <div class="title">Customers</div>
+        </div>
+    </div>
+    <div id="customer-table" class="page-layout simple fullwidth doc-page element-doc-page">
+        <!-- CONTENT -->
+        <div class="content">
+            <div class="md-title mb-32">Customer Table</div>
+            <md-card class="content-card" layout="column" style="margin: 0px;margin-bottom: 2px">
+                <div class="toolbar" layout="row" style="padding-left: 10px">
+                    <!--<div layout="row" flex><i class="icon-filter"></i></div>-->
+                    <div layout="row" layout-gt-sm="row" layout-align="start center" flex>
+                        <div layout-gt-sm="row">
+                            <md-input-container md-no-float class="md-block" flex-gt-sm>
+                                <md-icon><i class="icon-tag"></i></md-icon>
+                                <input type="text" name="tags" placeholder="Select Tags">
+                            </md-input-container>
+                        </div>
+                        <md-input-container>
+                            <md-datepicker ng-model="ctrl.FromDate" md-placeholder="From date" md-hide-icons="calendar"></md-datepicker>
+                        </md-input-container>
+                        <md-input-container>
+                            <md-datepicker ng-model="ctrl.ToDate" md-placeholder="To date" md-hide-icons="calendar"></md-datepicker>
+                        </md-input-container>
+                        <div layout-gt-md="row">
+                            <md-input-container md-no-float class="md-block" flex-gt-sm>
+                                <md-icon><i class="icon-magnify"></i></md-icon>
+                                <input type="text" name="search" placeholder="Search" ng-model="test">
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <span layout="row" layout-align="end center" flex="20">
+                            <md-button class="md-accent md-raised md-hue-1">IMPORT</md-button>
+                            <md-button class="md-accent md-raised md-hue-1">EXPORT</md-button>
+                    </span>
+                </div>
+            </md-card>
+            <div class="white-bg md-whiteframe-4dp">
+                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title"></span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Full Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Age Range</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Location</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">View</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="employee in ::vm.employees">
+                            <td>
+                                <div class="avatar-wrapper">
+                                    <img class="avatar" src="assets/images/avatars/profile.jpg">
+                                </div>
+                            </td>
+                            <td>{{ employee.name }}</td>
+                            <td>{{ employee.age }}</td>
+                            <td>{{ employee.office }}</td>
+                            <td>{{ employee.startDate }}</td>
+                            <td><a ng-click="vm.toggleSidenav('customerDetails')"><i class="icon-eye"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+    <md-sidenav id="customerDetails" class="md-sidenav-right" md-component-id="customerDetails" ms-scroll ui-view="customerDetails">
+        <md-card style="background-color: #ebecf0">
+            <div layout="row" layout-align="start center" style="padding: 20px; border-bottom: #ebecf0 1px solid;">
+                <div flex="20">
+                    <img class="profile-image avatar huge" src="assets/images/avatars/vincent.jpg">
+                </div>
+                <div flex-offset="20" flex="60">
+                    <h2>John Deo</h2>
+                    <h3>Location</h3>
+                    <h3>Age</h3>
+                </div>
+            </div>
+        </md-card>
+        <div layout="row" layout-align="start center" style="padding: 20px; padding-left: 7px; border-bottom: #ebecf0 1px solid;">
+            <div layout="column" flex="100">
+                <b style="font-size: 16px">Social Profiles</b>
+                <div flex-offset="10">facebook</div>
+            </div>
+        </div>
+        <div layout="row" layout-align="start center" style="padding: 20px; padding-left: 7px; border-bottom: #ebecf0 1px solid;">
+            <b style="font-size: 16px">Demographics</b>
+        </div>
+        <div layout="row" layout-align="start center" style="padding: 20px; padding-left: 7px; border-bottom: #ebecf0 1px solid;">
+            <b style="font-size: 16px">Websites</b>
+        </div>
+        <div layout="row" layout-align="start center" style="padding: 20px; padding-left: 7px; border-bottom: #ebecf0 1px solid;">
+            <b style="font-size: 16px">Intrest</b>
+        </div>
+        <div layout="row" layout-align="start center" style="padding: 20px; padding-left: 7px; border-bottom: #ebecf0 1px solid;">
+            <b style="font-size: 16px">Photos</b>
+        </div>
+    </md-sidenav>
