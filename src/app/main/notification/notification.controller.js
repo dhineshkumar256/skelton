@@ -5,9 +5,10 @@
       .module('app.notification')
       .controller('NotificationController', NotificationController);
 
-      function NotificationController($scope, NotificationData, DTOptionsBuilder, DTColumnBuilder){
+      function NotificationController($scope, $filter, NotificationData, DTOptionsBuilder, DTColumnBuilder){
 
         $scope.dataTableshow = true;
+        $scope.validURL = true;
         $scope.URL1 = [];
         $scope.data = {
             mobile: false,
@@ -28,16 +29,7 @@
             autoWidth : false,
             responsive: true
         };
-
-
-        // vm.dtColumns = [
-        //   DTColumnBuilder.newColumn('Name').withTitle('Customer Name'),
-        //   DTColumnBuilder.newColumn('createDate').withTitle('Created Date'),
-        //   DTColumnBuilder.newColumn('status').withTitle('Status'),
-        //   DTColumnBuilder.newColumn('view').withTitle('View/Edit'),
-        // ];
-
-        // vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(2);
+        vm.dtInstance = {};
 
         $scope.createNotification = function() {
             vm.formWizard = {};
@@ -47,22 +39,42 @@
             $scope.dataTableshow = true;
         };
         $scope.editNotification = function() {
-          console.log('hi')
             vm.formWizard = {capture:"http://www.google.com",
                                 PostURL:"http://www.google.com"
                             };
-            console.log(vm);
             $scope.dataTableshow = false;
         };
         $scope.validateURL = function(url){
-            var reg = url.match("(https*:\/\/)*[-a-zA-Z0-9/.?=+%&_]+\.(com|net|edu|gov|co|org)[.in]*[-a-zA-Z0-9/.?=+%&_]*");
-            if (reg) {
-              $scope.isURLValid = true;
-            } else {
-              $scope.isURLValid = false;
-              $scope.URL1 = [];
-            }
-            console.log($scope.isURLValid);
+          var expression = /https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/;
+          var regex = new RegExp(expression);
+          if (url.match(regex)) {
+              $scope.validURL = true;
+          } else {
+              $scope.validURL = false;
+              $scope.URL1.pop();
+          }
+        };
+        $scope.fnTablefilter = function() {
+            var fromdate = $scope.normalizeDate($scope.data.FromDate),
+                todate = $scope.normalizeDate($scope.data.ToDate);
+            vm.notification = $filter('filter')(NotificationData.data ,function(val, idx, data){
+              var Sdate = $scope.normalizeDate(val.createDate);
+                if(fromdate <= Sdate && Sdate <= todate){
+                    return true
+                } else if (Sdate >= fromdate && todate === '' && fromdate !== ''){
+                    return true;
+                } else if (Sdate <= todate && fromdate === '' && todate !== ''){
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            vm.dtInstance.rerender();
+        };
+        $scope.normalizeDate = function(dateString) {
+            var date = new Date(dateString);
+            var normalized = date.getFullYear() + '' + (("0" + (date.getMonth() + 1)).slice(-2)) + '' + ("0" + date.getDate()).slice(-2);
+            return normalized;
         };
       }
 })();

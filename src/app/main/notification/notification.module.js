@@ -4,9 +4,15 @@
 
     angular
         .module('app.notification', ['datatables', 'datatables.light-columnfilter'])
+        .run(initDT)
         .config(config);
 
     /** @ngInject */
+    function initDT(DTDefaultOptions) {
+      DTDefaultOptions.setLoadingTemplate(
+        '<div layout="row" layout-sm="column" layout-align="space-around"> <md-progress-circular md-mode="indeterminate"></md-progress-circular></div>'
+      );
+    };
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
     {
         // State

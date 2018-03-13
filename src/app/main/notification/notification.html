@@ -31,7 +31,7 @@
                                 </md-input-container>
                             </div>&nbsp;
                             <md-input-container>
-                                <md-datepicker ng-model="data.FromDate" md-placeholder="From date" md-hide-icons="calendar"></md-datepicker>
+                                <md-datepicker ng-model="data.FromDate" md-placeholder="From date" ng-change="fnTablefilter()" md-hide-icons="calendar"></md-datepicker>
                             </md-input-container>
                             <md-input-container>
                                 <md-datepicker ng-model="data.ToDate" md-placeholder="To date" ng-change="fnTablefilter()" md-hide-icons="calendar"></md-datepicker>
@@ -49,7 +49,7 @@
                         </span>
                     </div>
                 </md-card>
-                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
+                <table id="notificationTbl" class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions" dt-instance="vm.dtInstance">
                     <thead>
                         <tr>
                             <th class="primary-text">
@@ -115,14 +115,10 @@
                                     <md-input-container flex>
                                         <!-- <input type="text" name="capture" ng-model="vm.formWizard.capture"
                                                placeholder="Capture" ng-pattern="/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/" required> -->
-                                        <md-chips ng-model="URL1" md-transform-chip="validateURL($chip)" name="capture" readonly="false" placeholder="Enter a URL" secondary-placeholder="+URL" md-removable="URL1" required>
+                                        <md-chips ng-model="URL1" md-on-add="validateURL($chip)" readonly="false" placeholder="Enter a URL" secondary-placeholder="+URL" md-removable="URL1" required>
                                         </md-chips>
-                                        <div ng-messages="wizardStep1.capture.$error"
-                                             role="alert">
-                                            <div ng-message="required">
-                                                <span>Capture field is required.</span>
-                                            </div>
-                                            <div ng-message="pattern">
+                                        <div role="alert" ng-if="!validURL">
+                                            <div style="padding:5px; color:red; font-size:12px">
                                                 <span>That doesn't look like a valid URL.</span>
                                             </div>
                                         </div>
@@ -264,7 +260,7 @@
                     </div>
                     <md-button class="md-raised md-accent" ng-click="msWizard.nextStep()"
                                ng-hide="msWizard.isLastStep()"
-                               ng-disabled="msWizard.currentStepInvalid()">
+                               ng-disabled="msWizard.currentStepInvalid()" ng-if="URL1.length != 0">
                         Next
                     </md-button>
                     <md-button class="md-raised md-warn" ng-click="vm.sendForm(); msWizard.resetForm();"
