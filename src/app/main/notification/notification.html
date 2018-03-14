@@ -36,12 +36,12 @@
                             <md-input-container>
                                 <md-datepicker ng-model="data.ToDate" md-placeholder="To date" ng-change="fnTablefilter()" md-hide-icons="calendar"></md-datepicker>
                             </md-input-container>
-                            <div layout-gt-md="row">
+                            <!-- <div layout-gt-md="row">
                                 <md-input-container md-no-float class="md-block" flex-gt-sm>
                                     <md-icon><i class="icon-magnify"></i></md-icon>
                                     <input type="text" name="search" placeholder="Search">
                                 </md-input-container>
-                            </div>
+                            </div> -->
                         </div>
                         <span layout="row" layout-align="end center" flex="20">
                                 <md-button class="md-accent md-raised md-hue-1">IMPORT</md-button>
@@ -78,7 +78,7 @@
                       <tr ng-repeat="notifydata in ::vm.notification">
                           <td>{{ notifydata.name }}</td>
                           <td>{{ notifydata.createDate }}</td>
-                          <td><md-button ng-bind-html="notifydata.status"></md-button></td>
+                          <td ng-bind-html="notifydata.status"></td>
                           <td><md-button ng-click='editNotification()' ng-bind-html="notifydata.view"></md-button></td>
                       </tr>
                     </tbody>
@@ -113,11 +113,9 @@
                             <form name="wizardStep1" class="md-inline-form" ms-form-wizard-form novalidate>
                                 <div layout="column" layout-gt-xs="row" flex>
                                     <md-input-container flex>
-                                        <!-- <input type="text" name="capture" ng-model="vm.formWizard.capture"
-                                               placeholder="Capture" ng-pattern="/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/" required> -->
-                                        <md-chips ng-model="URL1" md-on-add="validateURL($chip)" readonly="false" placeholder="Enter a URL" secondary-placeholder="+URL" md-removable="URL1" required>
+                                        <md-chips ng-model="CaptureURL" md-on-add="validateURL($chip, 'Capture')" readonly="false" placeholder="Enter a Capture URL" secondary-placeholder="+URL" md-removable="CaptureURL" required>
                                         </md-chips>
-                                        <div role="alert" ng-if="!validURL">
+                                        <div role="alert" ng-if="!validCaptureURL">
                                             <div style="padding:5px; color:red; font-size:12px">
                                                 <span>That doesn't look like a valid URL.</span>
                                             </div>
@@ -143,19 +141,15 @@
                         <md-tab-body>
                             <form name="wizardStep2" ms-form-wizard-form novalidate>
                                 <div layout="column" layout-gt-xs="row">
-
-                                    <md-input-container flex>
-                                        <label>Post URL</label>
-                                        <input name="PostURL" ng-model="vm.formWizard.PostURL" placeholder="PostURL"
-                                               required ng-pattern="/^((https?|ftp|smtp):\/\/)?(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/">
-                                        <div ng-messages="wizardStep2.PostURL.$error"
-                                             role="alert" multiple>
-                                            <div ng-message="required"><span>You must give PostURL.</span></div>
-                                            <div ng-message="pattern">
-                                                <span>That doesn't look like a valid URL.</span>
-                                            </div>
-                                        </div>
-                                    </md-input-container>
+                                  <md-input-container flex>
+                                      <md-chips ng-model="DisplayURL" md-on-add="validateURL($chip, 'Display')" readonly="false" placeholder="Enter a Display URL" secondary-placeholder="+URL" md-removable="DisplayURL" required>
+                                      </md-chips>
+                                      <div role="alert" ng-if="!validDisplayURL">
+                                          <div style="padding:5px; color:red; font-size:12px">
+                                              <span>That doesn't look like a valid URL.</span>
+                                          </div>
+                                      </div>
+                                  </md-input-container>
                                 </div>
                             </form>
                         </md-tab-body>
@@ -260,7 +254,7 @@
                     </div>
                     <md-button class="md-raised md-accent" ng-click="msWizard.nextStep()"
                                ng-hide="msWizard.isLastStep()"
-                               ng-disabled="msWizard.currentStepInvalid()" ng-if="URL1.length != 0">
+                               ng-disabled="msWizard.currentStepInvalid()" ng-if="CaptureURL.length != 0">
                         Next
                     </md-button>
                     <md-button class="md-raised md-warn" ng-click="vm.sendForm(); msWizard.resetForm();"

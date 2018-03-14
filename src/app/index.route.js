@@ -70,13 +70,25 @@
         // END - Layout Style Switcher
 
         // State definitions
+
+        var member_id = sessionStorage.getItem('member_id');
+        console.log(member_id);
         $stateProvider
             .state('app', {
                 abstract: true,
                 views   : {
                     'main@'         : {
                         templateUrl: layouts[layoutStyle].main,
-                        controller : 'MainController as vm'
+                        controller : 'MainController as vm',
+                        resolve : {
+                          "check" : function($location) {
+                            if(member_id != null){
+                              $location.path('/dashboard');
+                            }else{
+                              $location.path('/login');
+                            }
+                          }
+                        }
                     },
                     'toolbar@app'   : {
                         templateUrl: layouts[layoutStyle].toolbar,

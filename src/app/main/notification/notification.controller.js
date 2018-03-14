@@ -8,8 +8,10 @@
       function NotificationController($scope, $filter, NotificationData, DTOptionsBuilder, DTColumnBuilder){
 
         $scope.dataTableshow = true;
-        $scope.validURL = true;
-        $scope.URL1 = [];
+        $scope.validCaptureURL = true;
+        $scope.validDisplayURL = true;
+        $scope.DisplayURL = [];
+        $scope.CaptureURL = [];
         $scope.data = {
             mobile: false,
             count: false,
@@ -36,6 +38,8 @@
             $scope.dataTableshow = false;
         };
         $scope.cancelCreateNotification = function() {
+            $scope.DisplayURL = [];
+            $scope.CaptureURL = [];
             $scope.dataTableshow = true;
         };
         $scope.editNotification = function() {
@@ -44,14 +48,20 @@
                             };
             $scope.dataTableshow = false;
         };
-        $scope.validateURL = function(url){
+        $scope.validateURL = function(url, type){
           var expression = /https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/;
           var regex = new RegExp(expression);
           if (url.match(regex)) {
-              $scope.validURL = true;
+              $scope.validCaptureURL = true;
+              $scope.validDisplayURL = true;
           } else {
-              $scope.validURL = false;
-              $scope.URL1.pop();
+              if(type == 'Capture'){
+                  $scope.CaptureURL.pop();
+                  $scope.validCaptureURL = false;
+              }else{
+                  $scope.DisplayURL.pop();
+                  $scope.validDisplayURL = false;
+              }
           }
         };
         $scope.fnTablefilter = function() {

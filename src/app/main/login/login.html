@@ -8,7 +8,13 @@
             </div>
 
             <div class="title" translate="LOGIN.TITLE">Log in to your account</div>
-
+            <div class="errorMsg" layout="row" layout-align="center center" style="color:red; font-size:15px" ng-if="!vm.userchek">
+              <div ng-messages="$error" role="alert">
+                  <div>
+                      <span>User Does Not Exist !! Or Invalid Credentials !!</span>
+                  </div>
+              </div>
+            </div>
             <form name="loginForm" novalidate>
                 <md-input-container class="md-block" md-no-float>
                     <input type="email" name="email" ng-model="vm.form.email" placeholder="Email"

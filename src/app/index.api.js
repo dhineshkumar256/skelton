@@ -182,6 +182,31 @@
 
         // api.sample = $resource(api.baseUrl + 'sample/sample.json');
 
+        api.register = {
+            registerAcc : $resource('https://justngage.azurewebsites.net/registration',
+              {email : '@email', password : '@password'},
+              {
+                post: {
+                  method: 'POST',
+                  headers: { "Content-type": "application/json"},
+                  isArray:true
+                }
+              }
+          )
+        }
+        api.login = {
+            loginUsr : $resource('https://justngage.azurewebsites.net/login',
+              {email : '@email', password : '@password'},
+              {
+                post: {
+                  method: 'POST',
+                  headers: { "Content-type": "application/json"},
+                  isArray:true
+                }
+              }
+          )
+        }
+
         return api;
     }
 

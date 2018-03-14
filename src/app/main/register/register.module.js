@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider)
+    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider)
     {
         // State
         $stateProvider.state('app.auth_register', {
@@ -27,6 +27,13 @@
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/register');
+
+        msApiProvider.register('regi',
+              [
+                'https://justngage.azurewebsites.net/login',
+                {email:'@email', password: '@password'}
+              ]
+        );
     }
 
 })();
