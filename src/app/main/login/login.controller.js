@@ -11,7 +11,8 @@
             vm.userchek = true;
             vm.form = {};
             $scope.login = function() {
-                api.login.loginUsr.post({'email': vm.form.email, 'password': vm.form.password},
+                var loginAuthData = {'email': vm.form.email, 'password': vm.form.password};
+                api.services.loginUsr.post(loginAuthData,
                     function (response){
                       if(response[0] != undefined){
                           $state.go('app.dashboard');

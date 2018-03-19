@@ -10,7 +10,7 @@
 
     <div class="content" layout="row" layout-align="end center">
         <md-button class="md-accent md-raised md-warn md-hue-1" ng-click="cancelCreateNotification()" ng-if="!dataTableshow">Cancel</md-button>
-        <md-button class="md-accent md-raised md-hue-1" ng-click="createNotification()">Create Notification</md-button>
+        <md-button class="md-accent md-raised md-hue-1" ng-click="openNotificationPanel()">Create Notification</md-button>
     </div>
     <!-- DATA TABLE STARTS HERE-->
     <div id="notification-table" class="page-layout simple fullwidth doc-page element-doc-page">
@@ -54,12 +54,27 @@
                         <tr>
                             <th class="primary-text">
                                 <div class="table-header">
-                                    <span class="column-title">Customer Name</span>
+                                    <span class="column-title">Message</span>
                                 </div>
                             </th>
                             <th class="primary-text">
                                 <div class="table-header">
                                     <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Modified Date</span>
+                                </div>
+                            </th>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Get URL</span>
+                                </div>
+                            </th>
+                            <th class="primary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Show URL</span>
                                 </div>
                             </th>
                             <th class="primary-text">
@@ -76,10 +91,20 @@
                     </thead>
                     <tbody>
                       <tr ng-repeat="notifydata in ::vm.notification">
-                          <td>{{ notifydata.name }}</td>
-                          <td>{{ notifydata.createDate }}</td>
-                          <td ng-bind-html="notifydata.status"></td>
-                          <td><md-button ng-click='editNotification()' ng-bind-html="notifydata.view"></md-button></td>
+                          <td>{{ notifydata.noti_message }}</td>
+                          <td ng-init="serializeCdate = normalizeDate(notifydata.created_date, true)">{{ serializeCdate }}</td>
+                          <td ng-init="serializeMdate = normalizeDate(notifydata.modified_date, true)">{{ serializeMdate }}</td>
+                          <td>{{notifydata.get_data_url}}</td>
+                          <td>{{notifydata.show_data_url}}</td>
+                          <td>
+                              <i ng-if="notifydata.status == 'ACTIVE'" class='icon-checkbox-marked-circle green-500-fg'></i>
+                              <i ng-if="notifydata.status != 'ACTIVE'" class='icon-cancel red-500-fg'></i>
+                          </td>
+                          <td>
+                            <md-button ng-click='editNotification(notifydata.id)'>
+                                <i class='icon-pencil'></i>
+                            </md-button>
+                          </td>
                       </tr>
                     </tbody>
                 </table>
@@ -171,7 +196,7 @@
                                 <div layout="column" layout-gt-xs="row">
                                     <md-input-container flex>
                                         <label>Message</label>
-                                        <textarea name="Message" ng-model="vm.formWizard.Message" rows="6" placeholder="Message"
+                                        <textarea name="Message" ng-model="vm.formWizard.noti_message" rows="6" placeholder="Message"
                                                   required></textarea>
                                         <div ng-messages="wizardStep3.Message.$error"
                                              role="alert" multiple>
@@ -199,44 +224,44 @@
                                 <div layout="column" layout-gt-xs="row">
                                     <md-input-container flex>
                                         <label>Tags</label>
-                                        <input type="text" name="tags" placeholder="Tags" />
+                                        <input ng-model="vm.formWizard.Tags" type="text" name="tags" placeholder="Tags" />
                                     </md-input-container>
                                 </div>
                                 <div layout="column" layout-gt-xs="row">
-                                    <md-switch md-invert ng-model="data.mobile" aria-label="Show on mobile" ng-change="onChange(data.mobile)">Show on Mobile</md-switch>
-                                    <md-switch md-invert ng-if="data.mobile" ng-model="data.mobileDevice" aria-label="Show on Top of Mobile Devices" ng-change="onChange(data.mobileDevice)">Show on Top of Mobile Devices</md-switch>
+                                    <md-switch md-invert ng-model="vm.formWizard.mobile_hide_1" aria-label="Show on mobile" ng-change="onChange(vm.formWizard.mobile_hide_1)">Show on Mobile</md-switch>
+                                    <md-switch md-invert ng-if="vm.formWizard.mobile_hide_1" ng-model="vm.formWizard.top_on_mobile_2" aria-label="Show on Top of Mobile Devices" ng-change="onChange(vm.formWizard.top_on_mobile_2)">Show on Top of Mobile Devices</md-switch>
                                 </div>
                                 <div layout="column" layout-gt-xs="row">
-                                    <md-switch md-invert ng-model="data.count" aria-label="Live User Count" ng-change="onChange(data.count)">Live User Count</md-switch>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <md-input-container flex ng-if="data.count">
+                                    <md-switch md-invert ng-model="vm.formWizard.live_user_count_3" aria-label="Live User Count" ng-change="onChange(vm.formWizard.live_user_count_3)">Live User Count</md-switch>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <md-input-container flex ng-if="vm.formWizard.live_user_count_3">
                                         Maximum User to show
-                                        <input type="text" name="showuser"/>
+                                        <input type="text" ng-model="vm.formWizard.set_max_live_count_4" name="showuser"/>
                                     </md-input-container>
-                                    <md-input-container flex ng-if="data.count">
+                                    <md-input-container flex ng-if="vm.formWizard.live_user_count_3">
                                         Refer User as
-                                        <input type="text" name="referuser"/>
+                                        <input type="text" ng-model="vm.formWizard.refer_user_as_5" name="referuser"/>
                                     </md-input-container>
                                 </div><br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    Display Last <input type="text" class="cstminout" /> Users.
+                                    Display Last <input ng-model="vm.formWizard.display_last_6" type="text" class="cstminout" /> Users.
                                 </div>
                                 <br/><br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    Display Last<input type="text" class="cstminout" /> days Users.
+                                    Display Last <input ng-model="vm.formWizard.display_last_days_7" type="text" class="cstminout" /> days Users.
                                 </div>
                                 <br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    <md-switch md-invert ng-model="data.recent" aria-label="Live User Count" ng-change="onChange(data.recent)">Display most Recent</md-switch>
+                                    <md-switch md-invert ng-model="vm.formWizard.display_most_recent_8" aria-label="Live User Count" ng-change="onChange(vm.formWizard.display_most_recent_8)">Display most Recent</md-switch>
                                 </div>
                                 <div layout="column" layout-gt-xs="row">
-                                    <md-switch md-invert ng-model="data.own" aria-label="Live User Count" ng-change="onChange(data.own)">See own message</md-switch>
+                                    <md-switch md-invert ng-model="vm.formWizard.own_noti_seen_9" aria-label="Live User Count" ng-change="onChange(vm.formWizard.own_noti_seen_9)">See own message</md-switch>
                                 </div>
                                 <div layout="column" layout-gt-xs="row">
-                                    <md-switch md-invert ng-model="data.unknownuser" aria-label="Live User Count" ng-change="onChange(data.unknownuser)">Hide unknown user</md-switch>
+                                    <md-switch md-invert ng-model="vm.formWizard.hide_unknown_10" aria-label="Live User Count" ng-change="onChange(vm.formWizard.hide_unknown_10)">Hide unknown user</md-switch>
                                 </div>
                                 <br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    Display Interval <input class="cstminout" type="text" width="25px" /> Seconds.
+                                    Display Interval <input ng-model="vm.formWizard.display_internal_11" class="cstminout" type="text" width="25px" /> Seconds.
                                 </div>
                             </form>
                         </md-tab-body>
@@ -257,7 +282,7 @@
                                ng-disabled="msWizard.currentStepInvalid()" ng-if="CaptureURL.length != 0">
                         Next
                     </md-button>
-                    <md-button class="md-raised md-warn" ng-click="vm.sendForm(); msWizard.resetForm();"
+                    <md-button class="md-raised md-warn" ng-click="createNotification($event);"
                                ng-show="msWizard.isLastStep()"
                                ng-disabled="msWizard.formsIncomplete()">
                         Finish

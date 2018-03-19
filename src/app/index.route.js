@@ -72,12 +72,12 @@
         // State definitions
 
         var member_id = sessionStorage.getItem('member_id');
-        console.log(member_id);
+
         $stateProvider
             .state('app', {
                 abstract: true,
                 views   : {
-                    'main@'         : {
+                    'main@' : {
                         templateUrl: layouts[layoutStyle].main,
                         controller : 'MainController as vm',
                         resolve : {

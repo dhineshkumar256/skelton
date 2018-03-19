@@ -30,7 +30,15 @@
                     </div>
                     <div layout="column" layout-gt-xs="row" flex>
                         <md-input-container flex="100" flex-gt-xs="50" >
-                            <input type="text" name="Phone" placeholder="Phone" ng-pattern="/^[0-9]*$/" required>
+                            <input type="tel" name="Phone" placeholder="Phone" ng-pattern="/^[0-9]*$/" required>
+                            <div ng-messages="Phone.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>Phone Number field is required</span>
+                                </div>
+                                <div ng-message="pattern">
+                                    <span>Phone Number must be valid !!</span>
+                                </div>
+                            </div>
                         </md-input-container>
                         <md-input-container flex="100" flex-gt-xs="50">
                             <input type="text" name="company" placeholder="company">
@@ -76,7 +84,7 @@
     <!-- ADDRESS END-->
         </div>
     </div>
-    
+
     <div class="page-layout carded fullwidth single-scroll" layout="row">
         <div class="center" layout="column" flex>
             <div class="header">

@@ -15,6 +15,8 @@
     };
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
     {
+
+        var member_id = {'member_id' : sessionStorage.getItem('member_id')};
         // State
         $stateProvider
             .state('app.notification', {
@@ -26,9 +28,10 @@
                     }
                 },
                 resolve: {
-                    NotificationData: function (msApi)
+                    NotificationData: function (apiResolver)
                     {
-                        return msApi.resolve('tables.notificationTable@get');
+                      console.log(member_id);
+                        return apiResolver.resolve('services.getNotification@post', member_id);
                     }
                 }
             });
@@ -37,7 +40,7 @@
         $translatePartialLoaderProvider.addPart('app/main/notification');
 
         // Api
-        msApiProvider.register('tables.notificationTable', ['app/data/tables/notificationTable.json']);
+        //msApiProvider.register('tables.notificationTable', ['https://justngage.azurewebsites.net/allnotification']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

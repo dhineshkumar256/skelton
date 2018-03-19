@@ -182,9 +182,9 @@
 
         // api.sample = $resource(api.baseUrl + 'sample/sample.json');
 
-        api.register = {
+        api.services = {
             registerAcc : $resource('https://justngage.azurewebsites.net/registration',
-              {email : '@email', password : '@password'},
+              '@registerAuthData',
               {
                 post: {
                   method: 'POST',
@@ -192,19 +192,37 @@
                   isArray:true
                 }
               }
-          )
-        }
-        api.login = {
+            ),
             loginUsr : $resource('https://justngage.azurewebsites.net/login',
-              {email : '@email', password : '@password'},
+              '@loginAuthData',
               {
                 post: {
-                  method: 'POST',
-                  headers: { "Content-type": "application/json"},
-                  isArray:true
+                  method  : 'POST',
+                  headers : { "Content-type": "application/json"},
+                  isArray : true
                 }
               }
-          )
+            ),
+            getNotification : $resource('https://justngage.azurewebsites.net/allnotification',
+                '@member_id',
+                {
+                    post: {
+                      method  : 'POST',
+                      headers : {"Content-type" : "application/json"},
+                      isArray : true
+                    }
+                }
+            ),
+            createNotification : $resource('https://justngage.azurewebsites.net/createnotification',
+                '@CreateNotificationData',
+                {
+                    post: {
+                        method  : 'POST',
+                        headers : {"Content-type" : "application/json"},
+                        isArray : true
+                    }
+                }
+            )
         }
 
         return api;

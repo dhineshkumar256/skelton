@@ -12,8 +12,7 @@
         var vm = this;
         vm.passchek = true;
         vm.form = {};
-        var bool = true, email = 'rajdhinesh256@gmail.com',
-            password = 'd123';
+        var bool = true;
         $scope.registerAcc = function(){
           if(vm.form.password == vm.form.passwordConfirm){
               vm.passchek = true;
@@ -23,10 +22,15 @@
             bool = false;
           }
           if(bool){
-            api.register.registerAcc.post({'email': vm.form.email, 'password': vm.form.password},
+            var registerAuthData = {'email': vm.form.email, 'password': vm.form.password};
+            api.services.registerAcc.post(registerAuthData,
                 function (response){
-                  sessionStorage.setItem('member_id', response[0].member_id);
-                  $state.go('app.settings');
+                  if(response[0]){
+                    sessionStorage.setItem('member_id', response[0].member_id);
+                    $state.go('app.settings');
+                  }else {
+                    console.log('account Already Exist');
+                  }
                 },
                 function(error) {
                   console.log(error);
