@@ -12,7 +12,7 @@
             vm.form = {};
             $scope.login = function() {
                 var loginAuthData = {'email': vm.form.email, 'password': vm.form.password};
-                api.services.loginUsr.post(loginAuthData,
+                api.services.loginUsrapi.post(loginAuthData,
                     function (response){
                       if(response[0] != undefined){
                           $state.go('app.dashboard');

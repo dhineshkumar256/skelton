@@ -60,30 +60,47 @@
           vm.formWizard['show_data_url'] = show_data_url;
           var CreateNotificationData = vm.formWizard;
 
-          api.services.createNotification.post(CreateNotificationData,
+          api.services.createNotificationapi.post(CreateNotificationData,
               function(response){
-                  console.log(response);
+                  vm.dtInstance.rerender();
                   $scope.cancelCreateNotification();
               },
               function(error){
                   console.log(error);
               }
           );
-        }
+        };
         $scope.cancelCreateNotification = function() {
             $scope.DisplayURL = [];
             $scope.CaptureURL = [];
             $scope.dataTableshow = true;
         };
-        $scope.editNotification = function(id) {
+        $scope.editNotification = function(memberId, id) {
             $scope.dataTableshow = false;
-            angular.forEach(vm.notification, function(obj, idx){
-                if(obj.id == id){
-                    $scope.DisplayURL.push(obj.get_data_url);
-                    $scope.CaptureURL.push(obj.show_data_url);
-                    vm.formWizard.Message = obj.noti_message;
+            var editNotificationData = {"member_id": memberId, "notification_id" : id};
+            api.services.editNotificationapi.post(editNotificationData,
+                function(response) {
+                  angular.forEach(response[0], function(val, idx){
+                      if(vm.formWizard[idx] != undefined){
+                        if(val == 'true'){
+                          vm.formWizard[idx] = true;
+                        }else{
+                          vm.formWizard[idx] = val;
+                        }
+                      }else{
+                        if(idx == 'get_data_url'){
+                            $scope.CaptureURL.push(val);
+                        }
+                        if(idx == 'show_data_url'){
+                            $scope.DisplayURL.push(val);
+                        }
+                      }
+                  });
+                },
+                function(error) {
+                  console.log(error);
                 }
-            });
+            )
         };
         $scope.validateURL = function(url, type){
           var expression = /https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,}/;
@@ -107,7 +124,7 @@
             vm.notification = $filter('filter')(NotificationData.data ,function(val, idx, data){
               var Sdate = $scope.normalizeDate(val.createDate);
                 if(fromdate <= Sdate && Sdate <= todate){
-                    return true
+                    return true;
                 } else if (Sdate >= fromdate && todate === '' && fromdate !== ''){
                     return true;
                 } else if (Sdate <= todate && fromdate === '' && todate !== ''){

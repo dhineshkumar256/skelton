@@ -183,7 +183,7 @@
         // api.sample = $resource(api.baseUrl + 'sample/sample.json');
 
         api.services = {
-            registerAcc : $resource('https://justngage.azurewebsites.net/registration',
+            registerAccapi : $resource('https://justngage.azurewebsites.net/registration',
               '@registerAuthData',
               {
                 post: {
@@ -193,7 +193,7 @@
                 }
               }
             ),
-            loginUsr : $resource('https://justngage.azurewebsites.net/login',
+            loginUsrapi : $resource('https://justngage.azurewebsites.net/login',
               '@loginAuthData',
               {
                 post: {
@@ -203,7 +203,7 @@
                 }
               }
             ),
-            getNotification : $resource('https://justngage.azurewebsites.net/allnotification',
+            getNotificationapi : $resource('https://justngage.azurewebsites.net/allnotification',
                 '@member_id',
                 {
                     post: {
@@ -213,7 +213,7 @@
                     }
                 }
             ),
-            createNotification : $resource('https://justngage.azurewebsites.net/createnotification',
+            createNotificationapi : $resource('https://justngage.azurewebsites.net/createnotification',
                 '@CreateNotificationData',
                 {
                     post: {
@@ -221,6 +221,16 @@
                         headers : {"Content-type" : "application/json"},
                         isArray : true
                     }
+                }
+            ),
+            editNotificationapi : $resource('https://justngage.azurewebsites.net/getnotificationbyid',
+                '@editNotificationData',
+                {
+                  post : {
+                      method  : 'POST',
+                      headers : { 'Content-type' : "application/json"},
+                      isArray : true
+                  }
                 }
             )
         }

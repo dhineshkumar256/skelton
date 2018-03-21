@@ -17,6 +17,7 @@
     {
 
         var member_id = {'member_id' : sessionStorage.getItem('member_id')};
+        console.log(member_id);
         // State
         $stateProvider
             .state('app.notification', {
@@ -30,8 +31,7 @@
                 resolve: {
                     NotificationData: function (apiResolver)
                     {
-                      console.log(member_id);
-                        return apiResolver.resolve('services.getNotification@post', member_id);
+                        return apiResolver.resolve('services.getNotificationapi@post', member_id);
                     }
                 }
             });

@@ -23,7 +23,7 @@
           }
           if(bool){
             var registerAuthData = {'email': vm.form.email, 'password': vm.form.password};
-            api.services.registerAcc.post(registerAuthData,
+            api.services.registerAccapi.post(registerAuthData,
                 function (response){
                   if(response[0]){
                     sessionStorage.setItem('member_id', response[0].member_id);
