@@ -232,6 +232,26 @@
                       isArray : true
                   }
                 }
+            ),
+            getprofileapi : $resource('https://justngage.azurewebsites.net/getprofile',
+              '@member_id',
+              {
+                post : {
+                  method  : 'POST',
+                  headers : { "Content-type" : "application/json"},
+                  isArray : true
+                }
+              }
+            ),
+            updateregistration : $resource('https://justngage.azurewebsites.net/updateregistration',
+              '@updateregistrationData',
+              {
+                post : {
+                  method  : 'POST',
+                  headers : { "Content-type" : "application/json"},
+                  isArray : true
+                }
+              }
             )
         }
 

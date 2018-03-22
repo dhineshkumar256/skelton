@@ -9,6 +9,8 @@
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
     {
+        var member_id = {'member_id' : sessionStorage.getItem('member_id')};
+        console.log(member_id);
         // State
         $stateProvider
             .state('app.settings', {
@@ -20,9 +22,9 @@
                     }
                 },
                 resolve: {
-                    ProfileData: function (msApi)
+                    ProfileData: function (apiResolver)
                     {
-                        return msApi.resolve('sample@get');
+                        return apiResolver.resolve('services.getprofileapi@post', member_id);
                     }
                 }
             });
@@ -31,7 +33,7 @@
         $translatePartialLoaderProvider.addPart('app/main/settings');
 
         // Api
-        msApiProvider.register('sample', ['app/data/sample/sample.json']);
+        //msApiProvider.register('sample', ['app/data/sample/sample.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

@@ -11,39 +11,70 @@
         <div class="center" layout="column" flex>
             <div class="header">
                 <span class="h1 black-fg">Update your Profile!</span>
+                <div class="content" layout="row" layout-align="end center">
+                  <md-button
+                  class="md-accent md-raised md-hue-1"
+                  ng-disabled="contactForm.firstname.$invalid ||
+                              contactForm.lastname.$invalid ||
+                              contactForm.Phone.$invalid ||
+                              contactForm.business_name.$invalid ||
+                              addressForm.Address.$invalid" 
+                  ng-click="updateUserdata()">Update
+                </md-button>
+                </div>
             </div>
     <!-- CONTACT STARTS-->
-            <md-card class="content-card" layout="column" >
+            <md-card class="content-card" layout="column">
                 <div class="toolbar" layout="row" layout-align="start center">
                     <span>Contact</span>
                 </div>
                 <!-- CONTACT CONTENT -->
                 <md-content class="content" flex>
-                    <div layout="column" layout-gt-xs="row" flex>
-                        <md-input-container flex="100" flex-gt-xs="50">
-                            <input type="text" name="firstname" placeholder="Firstname">
-                        </md-input-container>
+                  <md-tab-body>
+                    <form name="contactForm" novalidate>
+                      <div layout="column" layout-gt-xs="row" flex>
+                          <md-input-container flex="100" flex-gt-xs="50">
+                              <input type="text" name="firstname" ng-model="vm.userData.firstname" placeholder="Firstname" required>
+                              <div ng-messages="contactForm.firstname.$error" role="alert" multiple>
+                                  <div ng-message="required">
+                                      <span>Firstname field is required</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
 
-                        <md-input-container flex="100" flex-gt-xs="50">
-                            <input type="text" name="lastname" placeholder="Lastname">
-                        </md-input-container>
-                    </div>
-                    <div layout="column" layout-gt-xs="row" flex>
-                        <md-input-container flex="100" flex-gt-xs="50" >
-                            <input type="tel" name="Phone" placeholder="Phone" ng-pattern="/^[0-9]*$/" required>
-                            <div ng-messages="Phone.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>Phone Number field is required</span>
-                                </div>
-                                <div ng-message="pattern">
-                                    <span>Phone Number must be valid !!</span>
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container flex="100" flex-gt-xs="50">
-                            <input type="text" name="company" placeholder="company">
-                        </md-input-container>
-                    </div>
+                          <md-input-container flex="100" flex-gt-xs="50">
+                              <input type="text" name="lastname" ng-model="vm.userData.lastname" placeholder="Lastname" required>
+                              <div ng-messages="contactForm.lastname.$error" role="alert" multiple>
+                                  <div ng-message="required">
+                                      <span>Lastname field is required</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
+
+                      </div>
+                      <div layout="column" layout-gt-xs="row" flex>
+                          <md-input-container flex="100" flex-gt-xs="50" >
+                              <input type="tel" name="Phone" ng-model="vm.userData.phone" placeholder="Phone" ng-pattern="/^[0-9]*$/" required>
+                              <div ng-messages="contactForm.Phone.$error" role="alert" multiple>
+                                  <div ng-message="required">
+                                      <span>Phone Number field is required</span>
+                                  </div>
+                                  <div ng-message="pattern">
+                                      <span>Phone Number must be valid !!</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
+                          <md-input-container flex="100" flex-gt-xs="50">
+                              <input type="text" name="company" ng-model="vm.userData.business_name"placeholder="company" required>
+                              <div ng-messages="contactForm.company.$error" role="alert" multiple>
+                                  <div ng-message="required">
+                                      <span>Company field is required</span>
+                                  </div>
+                              </div>
+                          </md-input-container>
+                      </div>
+                    </form>
+                  </md-tab-body>
                 </md-content>
                 <!-- / CONTACT CONTENT -->
             </md-card>
@@ -56,28 +87,68 @@
                 </div>
             <!-- CONTACT CONTENT -->
                 <md-content class="content" flex>
-                    <div layout="column" layout-gt-xs="row" flex>
-                        <md-input-container flex="100" flex-gt-xs="50">
-                            <input type="text" name="Street" placeholder="Street">
+                  <md-tab-body>
+                    <form name="addressForm" novalidate>
+                      <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="100">
+                            <textarea type="text" rows="6" name="Address" ng-model="vm.userData.address" placeholder="Address" required></textarea>
+                            <div ng-messages="addressForm.Address.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>Address field is required</span>
+                                </div>
+                            </div>
                         </md-input-container>
+                      </div>
+                      <!--
+                        <div layout="column" layout-gt-xs="row" flex>
+                            <md-input-container flex="100" flex-gt-xs="50">
+                                <input type="text" name="Street" ng-model="vm.userData.street" placeholder="Street" required>
+                                <div ng-messages="addressForm.Street.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>Street field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
 
-                        <md-input-container flex="100" flex-gt-xs="50">
-                            <input type="text" name="City" placeholder="City">
-                        </md-input-container>
-                    </div>
-                    <div layout="column" layout-gt-xs="row" flex>
-                        <md-input-container flex="100" flex-gt-xs="50" >
-                            <input type="text" name="State" placeholder="State">
-                        </md-input-container>
-                        <md-input-container flex="100" flex-gt-xs="50">
-                            <input type="text" name="Zipcode" placeholder="Zipcode">
-                        </md-input-container>
-                    </div>
-                    <div layout="column" layout-gt-xs="row" flex>
-                        <md-input-container flex="100" flex-gt-xs="100" >
-                            <input type="text" name="Country" placeholder="Country">
-                        </md-input-container>
-                    </div>
+                            <md-input-container flex="100" flex-gt-xs="50">
+                                <input type="text" name="City"  ng-model="vm.userData.city" placeholder="City" required>
+                                <div ng-messages="addressForm.City.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>City field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-xs="row" flex>
+                            <md-input-container flex="100" flex-gt-xs="50" >
+                                <input type="text" name="State" ng-model="vm.userData.state" placeholder="State" required>
+                                <div ng-messages="addressForm.State.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>State field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex="100" flex-gt-xs="50">
+                                <input type="text" name="Zipcode" ng-model="vm.userData.zipcode" placeholder="Zipcode" required>
+                                <div ng-messages="addressForm.Zipcode.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>Zipcode field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-gt-xs="row" flex>
+                            <md-input-container flex="100" flex-gt-xs="100" >
+                                <input type="text" name="Country" ng-model="vm.userData.country" placeholder="Country">
+                                <div ng-messages="addressForm.Country.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>Country field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>-->
+                      </form>
+                  </md-tab-body>
                 </md-content>
             <!-- CONTACT CONTENT -->
             </md-card>
