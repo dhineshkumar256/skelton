@@ -11,6 +11,7 @@
             vm.userchek = true;
             vm.form = {};
             $scope.login = function() {
+                vm.userchek = true;
                 var loginAuthData = {'email': vm.form.email, 'password': vm.form.password};
                 api.services.loginUsrapi.post(loginAuthData,
                     function (response){

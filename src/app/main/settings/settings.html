@@ -54,7 +54,7 @@
                       </div>
                       <div layout="column" layout-gt-xs="row" flex>
                           <md-input-container flex="100" flex-gt-xs="50" >
-                              <input type="tel" name="Phone" ng-model="vm.userData.phone" placeholder="Phone" ng-pattern="/^[0-9]*$/" required>
+                              <input type="tel" name="Phone" ng-model="vm.userData.phone" placeholder="Phone" ng-pattern="/^\+?\d{2}[- ]?\d{3}[- ]?\d{5}$/" required>
                               <div ng-messages="contactForm.Phone.$error" role="alert" multiple>
                                   <div ng-message="required">
                                       <span>Phone Number field is required</span>
@@ -72,6 +72,37 @@
                                   </div>
                               </div>
                           </md-input-container>
+                      </div>
+                      <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="100" >
+                            <input type="tel" name="Email" ng-model="vm.userData.email" placeholder="email" ng-pattern="/^.+@.+\..+$/" required>
+                            <div ng-messages="contactForm.Email.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>Email field is required</span>
+                                </div>
+                                <div ng-message="pattern">
+                                    <span>Email must be valid !!</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                      </div>
+                      <div layout="column" layout-gt-xs="row" flex>
+                        <md-input-container flex="100" flex-gt-xs="50" >
+                            <input type="password" name="password" ng-model="vm.userData.password" placeholder="Password" required>
+                            <div ng-messages="contactForm.password.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>Password field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container flex="100" flex-gt-xs="50" >
+                            <input type="password" name="confirm_password" ng-model="vm.userData.confirm_password" placeholder="Confirm Password" required>
+                            <div ng-messages="contactForm.confirm_password.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>Confirm Password field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
                       </div>
                     </form>
                   </md-tab-body>
@@ -91,7 +122,7 @@
                     <form name="addressForm" novalidate>
                       <div layout="column" layout-gt-xs="row" flex>
                         <md-input-container flex="100" flex-gt-xs="100">
-                            <textarea type="text" rows="6" name="Address" ng-model="vm.userData.address" placeholder="Address" required></textarea>
+                            <textarea type="text" rows="6" name="Address" ng-model="vm.userData.address" ng-minlength="20" placeholder="Address" required></textarea>
                             <div ng-messages="addressForm.Address.$error" role="alert" multiple>
                                 <div ng-message="required">
                                     <span>Address field is required</span>
@@ -227,7 +258,7 @@
                     </span>
                 </div>
                 <!-- PAYMENT CONTENT -->
-                
+
                 <!-- / PAYMENT CONTENT -->
             </md-card>
     <!-- PAYMENT END-->

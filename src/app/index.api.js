@@ -260,6 +260,16 @@
                   isArray : true
                 }
               }
+            ),
+            checkoutapi : $resource('https://justngage.azurewebsites.net/checkout',
+            '@checkoutData',
+              {
+                post : {
+                  method : 'POST',
+                  headers : { "Content-type" : "application/json"},
+                  isArray : true
+                }
+              }
             )
         }
 

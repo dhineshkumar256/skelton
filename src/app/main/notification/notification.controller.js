@@ -12,7 +12,6 @@
         $scope.validDisplayURL = true;
         $scope.DisplayURL = [];
         $scope.CaptureURL = [];
-        $scope.test = 'hi';
         $scope.data = {
             FromDate: '',
             ToDate: ''

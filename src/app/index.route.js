@@ -83,7 +83,16 @@
                         resolve : {
                           "check" : function($location) {
                             if(member_id != null){
-                              $location.path('/dashboard');
+                              console.log(member_id, window.location.pathname);
+                              console.log(window.location.pathname == '/login', window.location.pathname == '/register', window.location.pathname == '/auth_forgot-password', window.location.pathname == '/auth_register');
+                              if( window.location.pathname == '/login' ||
+                                  window.location.pathname == '/register' ||
+                                  window.location.pathname == '/auth_forgot-password' ||
+                                  window.location.pathname == '/auth_register'){
+                                    $location.path('/dashboard');
+                              }else {
+                                $location.path(window.location.pathname);
+                              }
                             }else{
                               $location.path('/login');
                             }

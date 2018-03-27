@@ -9,8 +9,6 @@
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
     {
-        var member_id = {'member_id' : sessionStorage.getItem('member_id')};
-        console.log(member_id);
         // State
         $stateProvider
             .state('app.settings', {
@@ -24,6 +22,8 @@
                 resolve: {
                     ProfileData: function (apiResolver)
                     {
+                        var member_id = {'member_id' : sessionStorage.getItem('member_id')};
+                        console.log(member_id);
                         return apiResolver.resolve('services.getprofileapi@post', member_id);
                     }
                 }

@@ -126,8 +126,8 @@
                         <md-tab-label>
                             <span class="ms-form-wizard-step-label">
                                 <span class="ms-form-wizard-step-number md-accent-bg"
-                                      ng-if="wizardStep1.$invalid">1</span>
-                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep1.$valid">
+                                      ng-if="CaptureURL.length <= 0" ng-class="{'dulbackground' : CaptureURL.length <= 0}">1</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="CaptureURL.length > 0">
                                     <i class="icon-check s16"></i>
                                 </span>
                                 <span class="ms-form-wizard-step-text">Capture</span>
@@ -155,8 +155,8 @@
                         <md-tab-label>
                             <span class="ms-form-wizard-step-label">
                                 <span class="ms-form-wizard-step-number md-accent-bg"
-                                      ng-if="wizardStep2.$invalid">2</span>
-                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
+                                      ng-if="DisplayURL.length <= 0" ng-class="{'dulbackground' : DisplayURL.length <= 0}">2</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="DisplayURL.length > 0">
                                     <i class="icon-check s16"></i>
                                 </span>
                                 <span class="ms-form-wizard-step-text">Display</span>

@@ -16,6 +16,8 @@
                 vm.userData.phone = ProfileData[0].phone;
                 vm.userData.business_name = ProfileData[0].business_name;
                 vm.userData.address = ProfileData[0].address;
+                vm.userData.email = ProfileData[0].email;
+                vm.userData.password = ProfileData[0].password;
             }else{
                 alert = $mdDialog.alert({
                     title: 'Important !!',

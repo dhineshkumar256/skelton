@@ -128,13 +128,13 @@
         });
 
     /** @ngInject */
-    function PaymentController(AllPlansData, $scope)
+    function PaymentController(AllPlansData, $scope, api)
     {
         var vm = this;
         $scope.cardData = {};
         TCO.loadPubKey('sandbox');
         vm.AllPlansData = AllPlansData;
-        $scope.paymentMode = true;
+        $scope.paymentMode = false;
         $scope.planId = "";
 
         $scope.startPlan = function(planId) {
@@ -150,12 +150,20 @@
             TCO.requestToken($scope.successCallback, $scope.errorCallback, $scope.cardData);
         };
         $scope.successCallback = function(data) {
-            var paymentData = {
-                'token_id'  : data.response.token.token,
-                'plan_id'   : $scope.planId,
-                'member_id' : sessionStorage.getItem('member_id')
+            var checkoutData = {
+                "member_id" : sessionStorage.getItem('member_id'),
+                "productid" : $scope.planId,
+                "token"     : data.response.token.token
             };
-            console.log(paymentData);
+            api.services.checkoutapi.post(checkoutData,
+              function(response) {
+                console.log(response);
+              },
+              function(error) {
+                console.log(error);
+              }
+            )
+            console.log(checkoutData);
         };
         $scope.errorCallback = function(data) {
             console.log(data);

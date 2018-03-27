@@ -15,9 +15,6 @@
     };
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
     {
-
-        var member_id = {'member_id' : sessionStorage.getItem('member_id')};
-        console.log(member_id);
         // State
         $stateProvider
             .state('app.notification', {
@@ -31,6 +28,7 @@
                 resolve: {
                     NotificationData: function (apiResolver)
                     {
+                        var member_id = {'member_id' : sessionStorage.getItem('member_id')};
                         return apiResolver.resolve('services.getNotificationapi@post', member_id);
                     }
                 }
