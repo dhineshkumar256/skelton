@@ -252,6 +252,14 @@
                   isArray : true
                 }
               }
+            ),
+            allplansapi : $resource('https://justngage.azurewebsites.net/subscriptionplans',{},
+              {
+                get : {
+                  method  : 'GET',
+                  isArray : true
+                }
+              }
             )
         }
 

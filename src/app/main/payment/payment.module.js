@@ -20,18 +20,15 @@
                     }
                 },
                 resolve: {
-                    SampleData: function (msApi)
+                    AllPlansData: function (apiResolver)
                     {
-                        return msApi.resolve('sample@get');
+                        return apiResolver.resolve('services.allplansapi@get', {});
                     }
                 }
             });
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/payment');
-
-        // Api
-        msApiProvider.register('sample', ['app/data/sample/sample.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

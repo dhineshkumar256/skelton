@@ -8,36 +8,69 @@
         </div>
     </div>
     <!-- / HEADER -->
-
-    <div class="content" layout-align="start center">
+    <!-- Payemnt tab -->
+    <div class="page-layout carded fullwidth single-scroll" layout="column" flex="100" flex-offset-gt-xs="20" flex-gt-xs="50" ng-if="paymentMode">
+        <div class="center" layout="column" flex>
+          <md-card class="content-card" layout="column">
+            <div class="toolbar" layout="row" layout-align="start center">
+                <span>Payment</span>
+            </div>
+            <md-content class="content" flex>
+              <md-tab-body>
+                <form class="payment-form" name="paymentForm">
+                  <div layout="column" layout-gt-xs="row" flex>
+                      <md-input-container flex="100">
+                          <input ng-model="cardData.ccNo" type="text" name="ccNo" placeholder="Card Number" card-number required>
+                      </md-input-container>
+                  </div>
+                  <div layout="column" layout-gt-xs="row" flex>
+                      <md-input-container flex="100" flex-gt-xs="50" >
+                          <input type="text" ng-model="cardData.expMonth" name="expMontYear" placeholder="MM/YY" card-date required>
+                      </md-input-container>
+                      <md-input-container flex="100" flex-gt-xs="50" >
+                          <input type="text" ng-model="cardData.cvv" name="cvv" placeholder="CVV" card-cvv required>
+                      </md-input-container>
+                  </div>
+                  <div layout="column" layout-gt-xs="row" layout-align="end center" flex>
+                      <md-button class="md-accent md-raised md-hue-1" ng-click="madePayment()" ng-disabled="paymentForm.$invalid">Proceed to Pay</md-button>
+                  </div>
+                </form>
+              </md-tab-body>
+            </md-content>
+          </md-card>
+        </div>
+    </div>
+    <!-- Payment tab ends -->
+    <div class="content" layout-align="start center" ng-if="!paymentMode">
         <div class="price-tables" flex layout="row" layout-align="center end" layout-wrap>
-            <div class="price-table style-3 md-whiteframe-1dp" layout="column">
+            <div class="price-table style-3 md-whiteframe-1dp" layout="column" ng-repeat = "planData in vm.AllPlansData">
                 <div class="package-type">
-                    <div class="title">Starter</div>
+                    <div class="title">{{planData.planname}}</div>
                     <div class="subtitle">For small teams</div>
+                    <div class="period">{{planData.status}}</div>
                 </div>
 
                 <div class="price md-primary-bg md-hue-3" layout="row" layout-align="center start">
                     <div class="currency">$</div>
                     <div layout="row" layout-align="center end">
-                        <div class="value">29</div>
-                        <div class="period">monthly per user</div>
+                        <div class="value">{{planData.amount}}</div>
+                        <div class="period">{{planData.type}}</div>
                     </div>
                 </div>
 
                 <div class="terms" layout="column" layout-align="start center">
-                    <div class="term">Unlimited projects</div>
-                    <div class="term">Unlimited pages</div>
+                    <div class="term" style="text-align:center">{{planData.description}}</div>
+                    <!-- <div class="term">Unlimited pages</div>
                     <div class="term">Unlimited disk space</div>
-                    <div class="term">24 / 7 Free support</div>
+                    <div class="term">24 / 7 Free support</div> -->
                 </div>
 
-                <md-button class="cta-button md-raised md-accent">GET STARTED FREE</md-button>
+                <md-button class="cta-button md-raised md-accent" ng-click="startPlan(planData.plan_id)">GET STARTED</md-button>
 
-                <div class="note">7 day free trial to start</div>
+                <div class="note">Notification Limit {{planData.notification_limit}}</div>
             </div>
 
-            <div class="price-table style-3 md-whiteframe-8dp" layout="column">
+            <!-- <div class="price-table style-3 md-whiteframe-8dp" layout="column">
                 <div class="package-type">
                     <div class="title">Pro</div>
                     <div class="subtitle">For larger teams</div>
@@ -90,7 +123,7 @@
                 <md-button class="cta-button md-raised md-accent">CALL US</md-button>
 
                 <div class="note">90 day free trial to start</div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
