@@ -163,7 +163,6 @@
                 console.log(error);
               }
             )
-            console.log(checkoutData);
         };
         $scope.errorCallback = function(data) {
             console.log(data);

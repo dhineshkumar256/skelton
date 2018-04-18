@@ -7,7 +7,7 @@
         .controller('RegisterController', RegisterController);
 
     /** @ngInject */
-    function RegisterController(api, $scope, $state)
+    function RegisterController(api, $rootScope, $scope, $state)
     {
         var vm = this;
         vm.passchek = true;
@@ -26,6 +26,7 @@
             api.services.registerAccapi.post(registerAuthData,
                 function (response){
                   if(response[0]){
+                    $rootScope.ShowUsername = response[0].email;
                     sessionStorage.setItem('member_id', response[0].member_id);
                     $state.go('app.settings');
                   }else {

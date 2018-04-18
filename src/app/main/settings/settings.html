@@ -9,18 +9,34 @@
     </div>
     <div class="page-layout carded fullwidth single-scroll" layout="row">
         <div class="center" layout="column" flex>
+          <ms-info-bar ng-if="errorMsg.length > 0">
+            <div layout="row" layout-align="start center">
+              <div class="white-fg" flex hide-xs>
+                {{errorMsg[0]}}
+              </div>
+            </div>
+          </ms-info-bar>
+          <ms-info-bar ng-if="successMsg.length > 0" style="background-color:mediumseagreen">
+            <div layout="row" layout-align="start center">
+              <div class="white-fg" flex hide-xs>
+                {{successMsg[0]}}
+              </div>
+            </div>
+          </ms-info-bar>
             <div class="header">
-                <span class="h1 black-fg">Update your Profile!</span>
+                <div class="content" layout="row" layout-align="start center">
+                  <span class="h1 black-fg">Your Informations</span>
+                </div>
                 <div class="content" layout="row" layout-align="end center">
                   <md-button
-                  class="md-accent md-raised md-hue-1"
-                  ng-disabled="contactForm.firstname.$invalid ||
-                              contactForm.lastname.$invalid ||
-                              contactForm.Phone.$invalid ||
-                              contactForm.business_name.$invalid ||
-                              addressForm.Address.$invalid"
-                  ng-click="updateUserdata()">Update
-                </md-button>
+                    class="md-accent md-raised md-hue-1"
+                    ng-disabled="contactForm.firstname.$invalid ||
+                                contactForm.lastname.$invalid ||
+                                contactForm.Phone.$invalid ||
+                                contactForm.business_name.$invalid ||
+                                addressForm.Address.$invalid"
+                    ng-click="updateUserdata()">Update
+                  </md-button>
                 </div>
             </div>
     <!-- CONTACT STARTS-->

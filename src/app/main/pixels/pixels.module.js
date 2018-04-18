@@ -42,7 +42,7 @@
 
         msNavigationServiceProvider.saveItem('fuse.pixels', {
             title    : 'Pixels',
-            icon     : 'icon-tile-four',
+            icon     : 'icon-console',
             state    : 'app.pixels',
             /*stateParams: {
                 'param1': 'page'

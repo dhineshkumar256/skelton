@@ -27,7 +27,5 @@
             autoWidth : false,
             responsive: true
         };
-
-
-    }
+      }
 })();

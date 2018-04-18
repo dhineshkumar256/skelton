@@ -49,7 +49,7 @@
 
         msNavigationServiceProvider.saveItem('fuse.notification', {
             title    : 'Notifications',
-            icon     : 'icon-tile-four',
+            icon     : 'icon-bell',
             state    : 'app.notification',
             /*stateParams: {
                 'param1': 'page'

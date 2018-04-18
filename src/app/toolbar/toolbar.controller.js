@@ -116,7 +116,6 @@
          */
         function logout()
         {
-          console.log('hi');
           sessionStorage.clear();
             // Do logout here..
         }

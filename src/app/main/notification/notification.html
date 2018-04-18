@@ -7,7 +7,17 @@
             <div class="title">Notifications</div>
         </div>
     </div>
-
+    <div class="page-layout carded fullwidth single-scroll" layout="row">
+      <div class="center" layout="column" flex>
+        <ms-info-bar ng-if="successMsg.length > 0" style="background-color:mediumseagreen">
+          <div layout="row" layout-align="start center">
+            <div class="white-fg" flex hide-xs>
+              {{successMsg[0]}}
+            </div>
+          </div>
+        </ms-info-bar>
+      </div>
+    </div>
     <div class="content" layout="row" layout-align="end center">
         <md-button class="md-accent md-raised md-warn md-hue-1" ng-click="cancelCreateNotification()" ng-if="!dataTableshow">Cancel</md-button>
         <md-button class="md-accent md-raised md-hue-1" ng-click="openNotificationPanel()">Create Notification</md-button>
@@ -44,8 +54,8 @@
                             </div> -->
                         </div>
                         <span layout="row" layout-align="end center" flex="20">
-                                <md-button class="md-accent md-raised md-hue-1">IMPORT</md-button>
-                                <md-button class="md-accent md-raised md-hue-1">EXPORT</md-button>
+                          <md-button class="md-accent md-raised md-hue-1">IMPORT</md-button>
+                          <md-button class="md-accent md-raised md-hue-1">EXPORT</md-button>
                         </span>
                     </div>
                 </md-card>
@@ -184,8 +194,8 @@
                         <md-tab-label>
                             <span class="ms-form-wizard-step-label">
                                 <span class="ms-form-wizard-step-number md-accent-bg"
-                                      ng-if="wizardStep3.$invalid">3</span>
-                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
+                                      ng-if="DisplayURL.length <= 0" ng-class="{'dulbackground' : DisplayURL.length <= 0}">3</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="DisplayURL.length > 0">
                                     <i class="icon-check s16"></i>
                                 </span>
                                 <span class="ms-form-wizard-step-text">Type</span>
@@ -212,8 +222,8 @@
                         <md-tab-label>
                             <span class="ms-form-wizard-step-label">
                                 <span class="ms-form-wizard-step-number md-accent-bg"
-                                      ng-if="wizardStep4.$invalid">4</span>
-                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep4.$valid">
+                                      ng-if="!vm.formWizard.noti_message">4</span>
+                                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="vm.formWizard.noti_message">
                                     <i class="icon-check s16"></i>
                                 </span>
                                 <span class="ms-form-wizard-step-text">Customize</span>
@@ -235,7 +245,7 @@
                                     <md-switch md-invert ng-model="vm.formWizard.live_user_count_3" aria-label="Live User Count" ng-change="onChange(vm.formWizard.live_user_count_3)">Live User Count</md-switch>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <md-input-container flex ng-if="vm.formWizard.live_user_count_3">
                                         Maximum User to show
-                                        <input type="text" ng-model="vm.formWizard.set_max_live_count_4" name="showuser"/>
+                                        <input type="text" ng-model="vm.formWizard.set_max_live_count_4" name="showuser" number-only/>
                                     </md-input-container>
                                     <md-input-container flex ng-if="vm.formWizard.live_user_count_3">
                                         Refer User as
@@ -243,11 +253,11 @@
                                     </md-input-container>
                                 </div><br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    Display Last <input ng-model="vm.formWizard.display_last_6" type="text" class="cstminout" /> Users.
+                                    Display Last <input ng-model="vm.formWizard.display_last_6" type="text" class="cstminout" number-only/> Users.
                                 </div>
                                 <br/><br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    Display Last <input ng-model="vm.formWizard.display_last_days_7" type="text" class="cstminout" /> days Users.
+                                    Display Last <input ng-model="vm.formWizard.display_last_days_7" type="text" class="cstminout" number-only/> days Users.
                                 </div>
                                 <br/>
                                 <div layout="column" layout-gt-xs="row">
@@ -261,7 +271,7 @@
                                 </div>
                                 <br/>
                                 <div layout="column" layout-gt-xs="row">
-                                    Display Interval <input ng-model="vm.formWizard.display_internal_11" class="cstminout" type="text" width="25px" /> Seconds.
+                                    Display Interval <input ng-model="vm.formWizard.display_internal_11" class="cstminout" type="text" width="25px" number-only/> Seconds.
                                 </div>
                             </form>
                         </md-tab-body>
@@ -284,11 +294,10 @@
                     </md-button>
                     <md-button class="md-raised md-warn" ng-click="createNotification($event);"
                                ng-show="msWizard.isLastStep()"
-                               ng-disabled="msWizard.formsIncomplete()">
+                               ng-disabled="msWizard.formsIncomplete()" ng-if="CaptureURL.length != 0 && DisplayURL.le != 0">
                         Finish
                     </md-button>
                 </div>
-
             </ms-form-wizard>
             <!-- / FORM WIZARD -->
         </div>

@@ -23,7 +23,6 @@
                     ProfileData: function (apiResolver)
                     {
                         var member_id = {'member_id' : sessionStorage.getItem('member_id')};
-                        console.log(member_id);
                         return apiResolver.resolve('services.getprofileapi@post', member_id);
                     }
                 }
@@ -44,7 +43,7 @@
 
         msNavigationServiceProvider.saveItem('fuse.settings', {
             title    : 'Settings',
-            icon     : 'icon-tile-four',
+            icon     : 'icon-apps',
             state    : 'app.settings',
             /*stateParams: {
                 'param1': 'page'

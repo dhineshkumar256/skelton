@@ -42,7 +42,7 @@
 
         msNavigationServiceProvider.saveItem('fuse.customers', {
             title    : 'Customers',
-            icon     : 'icon-tile-four',
+            icon     : 'icon-account',
             state    : 'app.customers',
             /*stateParams: {
                 'param1': 'page'

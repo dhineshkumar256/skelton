@@ -3,7 +3,24 @@
 
     angular
       .module('app.notification')
-      .controller('NotificationController', NotificationController);
+      .controller('NotificationController', NotificationController)
+      .directive('numberOnly', function() {
+        return {
+          restrict: 'A',
+          require: 'ngModel',
+          link: function (scope, element, attrs, modelCtrl) {
+            modelCtrl.$parsers.push(function (inputValue) {
+              if (inputValue == undefined) return '';
+              var transformedInput = inputValue.replace(/[^0-9]/g, '');
+              if (transformedInput !== inputValue) {
+                modelCtrl.$setViewValue(transformedInput);
+                modelCtrl.$render();
+              }
+              return transformedInput;
+            });
+          }
+        }
+      });
 
       function NotificationController($scope, $filter, NotificationData, DTOptionsBuilder, DTColumnBuilder, api){
 
@@ -12,6 +29,7 @@
         $scope.validDisplayURL = true;
         $scope.DisplayURL = [];
         $scope.CaptureURL = [];
+        $scope.successMsg = [];
         $scope.data = {
             FromDate: '',
             ToDate: ''
@@ -63,11 +81,16 @@
               function(response){
                   vm.dtInstance.rerender();
                   $scope.cancelCreateNotification();
+                  $scope.successMsg.push('Notification Created Successfully !!');
               },
               function(error){
                   console.log(error);
               }
           );
+          vm.notification.push(CreateNotificationData);
+          vm.dtInstance.rerender();
+          $scope.cancelCreateNotification();
+          $scope.successMsg.push('Notification Created Successfully !!');
         };
         $scope.cancelCreateNotification = function() {
             $scope.DisplayURL = [];
@@ -122,15 +145,13 @@
                 todate = $scope.normalizeDate($scope.data.ToDate);
             vm.notification = $filter('filter')(NotificationData.data ,function(val, idx, data){
               var Sdate = $scope.normalizeDate(val.createDate);
-                if(fromdate <= Sdate && Sdate <= todate){
-                    return true;
-                } else if (Sdate >= fromdate && todate === '' && fromdate !== ''){
-                    return true;
-                } else if (Sdate <= todate && fromdate === '' && todate !== ''){
-                    return true;
-                } else {
-                    return false;
-                }
+                if (fromdate <= Sdate && Sdate <= todate){ return true; }
+                 else
+                if (Sdate >= fromdate && todate === '' && fromdate !== ''){ return true; }
+                 else
+                if (Sdate <= todate && fromdate === '' && todate !== ''){ return true;}
+                 else
+                { return false; }
             });
             vm.dtInstance.rerender();
         };

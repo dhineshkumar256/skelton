@@ -6,7 +6,9 @@
                     <img src="../../../assets/images/logos/brandlogo.png"/>
                 </span>
             </div>
-
+            <div layout="row" layout-align="center center">
+              <md-progress-circular  class="md-accent" ng-disabled="loginLoadingProgress" md-diameter="32"></md-progress-circular>
+            </div>
             <div class="title" translate="LOGIN.TITLE">Log in to your account</div>
             <div class="errorMsg" layout="row" layout-align="center center" style="color:red; font-size:15px" ng-if="!vm.userchek">
               <div ng-messages="$error" role="alert">
